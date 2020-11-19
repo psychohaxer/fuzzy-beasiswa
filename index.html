@@ -169,6 +169,87 @@
                         "kecil": kecil.u(x)
                     }
                 }
+                
+                function mf_kelayakan_singleton(){
+                    return{
+                        "rendah": 50,
+                        "tinggi": 80
+                    }
+                }
+                
+                function fmin(a,b){
+                    return Math.min(a,b)
+                }
+                
+                function fmax(arr){
+                    var a = 0;
+                    for (var i in arr){
+                        a = Math.max(a,arr[i]);
+                    }
+                    
+                    return a;
+                }
+                
+                function fmaxMin(a,b,c,d){
+                    return Math.max(Math.min(a,b),Math.min(c,d));
+                }
+                
+                function fcog(a,b){
+                    for (var i=0;i<i; i+=10){
+                    
+                    }
+                }
+                
+                function klik_proses(){
+                    var ipk = parseFloat($('#inIPK').val());
+                    console.log('IPK: '+ipk);
+                    
+                    ipk = mf_IPK(ipk);
+                    console.log(ipk);
+                    
+                    var gaji = parseFloat($('#inGaji').val());
+                    console.log('Gaji: '+gaji);
+                    
+                    ipk = mf_gaji(gaji);
+                    console.log(gaji);
+                    
+                    var rendah = [];
+                    var tinggi = [];
+                    
+                    rendah.push(fmin(ipk.buruk,gaji.kecil));
+                    rendah.push(fmin(ipk.buruk,gaji.sedang));
+                    rendah.push(fmin(ipk.buruk,gaji.besar));
+                    rendah.push(fmin(ipk.buruk,gaji.sangatbesar));
+                    
+                    tinggi.push(fmin(ipk.cukup,gaji.kecil));
+                    rendah.push(fmin(ipk.cukup,gaji.sedang));
+                    rendah.push(fmin(ipk.cukup,gaji.besar));
+                    rendah.push(fmin(ipk.cukup,gaji.sangatbesar));
+                    
+                    tinggi.push(fmin(ipk.bagus,gaji.kecil));
+                    tinggi.push(fmin(ipk.bagus,gaji.sedang));
+                    tinggi.push(fmin(ipk.bagus,gaji.besar));
+                    rendah.push(fmin(ipk.bagus,gaji.sangatbesar));
+                    
+                    tinggi = fmax(tinggi);
+                    rendah = fmax(rendah);
+                    
+                    var sa = 0;
+                    var sb = 0;
+                    var aa = 10;
+                    for (var i=aa; i<=100; i+=aa){
+                        layak = mf_kelayakan(i);
+                        c = fmaxMin(layak.rendah,rendah,layak.tinggi,tinggi);
+                        sa += i*c;
+                        sb += c;
+                    }
+                    
+                    var mm = sa/sb;
+                    
+                    console.log('Layak Rendah: '+rendah);
+                    console.log('Layak Tinggi: '+tinggi);
+                    console.log('Kelayakan Mamdani: '+mm);
+                }
             </script>
         </div>
     </body>
