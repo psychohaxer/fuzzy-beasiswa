@@ -1,0 +1,175 @@
+<html>
+    <head>
+        <title> Fuzzy - Kelayakan Beasiswa </title>
+        
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+        <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container" style="margin-top:30px; max-width:600px; position:relative;">
+            <hr>
+            <h1> Tugas Praktikum Fuzzy <br> <small> Studi Kasus: Kelayakan Beasiswa </small> </h1>
+            <hr>
+            <h4> 201951071 | Firman Adi Nur Fatin </h4>
+            <hr>
+            
+            <div class="form-group">
+                <label> IPK (0-4) </label>
+                <input class="form-control" type="text" value="3" id="inIPK">
+            </div>
+            
+            <div class="form-group">
+                <label> Gaji (juta) </label>
+                <input class="form-control" type="text" value="10" id="inGaji">
+            </div>
+            
+            <button class="btn btn-primary btn-block btn-lg" id="btnProses"> Proses </button>
+            
+            <div id="divOut"> </div>
+            
+            <img src="img/mamdani.jpg" style="width:100%; border:1px solid #eef;"> <hr>
+            <img src="img/sugeno.jpg" style="width:100%; border:1px solid #fcf8e3;"> <hr>
+            
+            <div class="alert alert-success">
+                <strong> REFERENSI: </strong> <a href="pdf/fuzzy - contoh kasus beasiswa.pdf" target="_blank"> Download PDF </a>
+            </div>
+            
+            <script src="lib/jquery/jquery.min.js" type="text/javascript"></script>
+            <script src="lib/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+            
+            <script type="text/javascript">            
+                function inDiv(s){
+                    return ("div>"+ s + "</div>");
+                }
+                
+                function lbDic(lbl,s){
+                    return ('<div class="label label-' + lbl + '">' + s + '</div>');
+                }
+                
+                function alDiv(lbl,s){
+                    return ('<div class="label label-' + lbl + '">' + s + '</div>');
+                }
+                
+                var linier_turun = function(va,vb){
+                    this.a = va;
+                    this.b = vb;
+                    this.u = function (x){
+                        var a = this.a;
+                        var b = this.b;
+                        var y = 0;
+                        
+                        if ((x<a))
+                            y = 1;
+                        else if ((x=>a) && (x<=b))
+                            y = (b-x)/(b-a);
+                        else if ((x>b))
+                            y = 0;
+                            
+                        return y;
+                    }
+                }
+                
+                var linier_naik = function(va,vb){
+                    this.a = va;
+                    this.b = vb;
+                    this.u = function(x){
+                        var a = this.a;
+                        var b = this.b;
+                        var y = 0;
+                        
+                        if ((x<a))
+                            y = 0;
+                        else if ((x=>a) && (x<=b))
+                            y = (x-a)/(b-a);
+                        else if ((x>b))
+                            y = 1;
+                            
+                        return y;
+                    }
+                }
+                
+                var segitiga = function(va,vb,vc){
+                    this.a = va;
+                    this.b = vb;
+                    this.c = vc;
+                    this.u = function(x){
+                        var a = this.a;
+                        var b = this.b;
+                        var c = this.c;
+                        var y = 0;
+                        
+                        if ((x<a) || (x>c)
+                            y = 0;
+                        else if ((x=>a) && (x<=b))
+                            y = (x-a)/(b-a);
+                        else if ((x>b))
+                            y = (c-x)/(c-b);
+                            
+                        return y;
+                    }
+                }
+                
+                var trapesium = function(va,vb,vc,vd){
+                    this.a = va;
+                    this.b = vb;
+                    this.c = vc;
+                    this.d = vd;
+                    this.u = function(x){
+                        var a = this.a;
+                        var b = this.b;
+                        var c = this.c;
+                        var y = 0;
+                        
+                        if ((x<a) || (x>d)
+                            y = 0;
+                        else if ((x=>a) && (x<=b))
+                            y = (x-a)/(b-a);
+                        else if ((x>b) && (x<c)
+                            y = 1;
+                        else if ((x>=c) && (x<=d)
+                            y = (d-x)/(d-c);
+
+                        return y;
+                    }
+                }
+                
+                function mf_IPK(x){
+                    var buruk = new linier_turun(2, 2.75);
+                    var cukup = new segitiga(2, 2.75, 3.325);
+                    var bagus = new segitiga(2.75, 3.25);
+                    
+                    return{
+                        "buruk": buruk.u(x),
+                        "cukup": cukup.u(x),
+                        "bagus": bagus.u(x)
+                    };
+                }
+                
+                function mf_gaji(x){
+                    var kecil = new linier_turun(1,3);
+                    var sedang = new trapesium(1,3,4,6);
+                    var besar = new trapesium(4,6,7,12);
+                    var sangatbesar = new linier_naik(7,12);
+                    
+                    return{
+                        "kecil": kecil.u(x),
+                        "sedang": sedang.u(x),
+                        "besar": besar.u(x),
+                        "sangatbesar": sangatbesar.u(x)
+                    };
+                }
+                
+                function mf_kelayakan(x){
+                    var rendah = new linier_turun(50,80);
+                    var tinggi = new linier_naik(50,80);
+                    
+                    return{
+                        "kecil": kecil.u(x),
+                        "kecil": kecil.u(x)
+                    }
+                }
+            </script>
+        </div>
+    </body>
+</html>
