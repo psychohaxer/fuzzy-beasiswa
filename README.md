@@ -8,3 +8,6 @@ Repository ini berisi source code tugas Praktikum Logika Fuzzy: Kelayakan Beasis
 ## Catatan Penting
 Terdapat library yang kurang untuk menjalankan program ini. Setelah ditambahkan, program ini bisa dijalankan. Terima kasih.
 
+## Status: WIP
+Program ini masih dalam status <i>Work in Progress</i>.
+
