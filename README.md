@@ -5,9 +5,5 @@ Repository ini berisi source code tugas Praktikum Logika Fuzzy: Kelayakan Beasis
 ## Author
 201951071 | Firman Adi Nur Fatin
 
-## Catatan Penting
-Terdapat library yang kurang untuk menjalankan program ini. Setelah ditambahkan, program ini bisa dijalankan. Terima kasih.
-
-## Status: WIP
-Program ini masih dalam status <i>Work in Progress</i>.
-
+## Status: Done
+Program ini sudah bisa digunakan dan dinilai.
